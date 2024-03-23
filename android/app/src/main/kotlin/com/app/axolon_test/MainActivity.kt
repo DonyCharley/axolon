@@ -1,0 +1,5 @@
+package com.app.axolon_test
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
