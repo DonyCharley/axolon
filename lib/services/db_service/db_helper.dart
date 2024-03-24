@@ -1,3 +1,4 @@
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -91,7 +92,9 @@ class DatabaseHelper {
   Future<List<Header>> getHeaders() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db!.query('headers');
+    //print(maps[1]['grandTotal']);
     return List.generate(maps.length, (i) {
+
       return Header(
         id: maps[i]['id'],
         customer: maps[i]['customer'],
@@ -165,12 +168,28 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> deleteDetail(int id) async {
+  Future<void> deleteDetail(int id,int headerId) async {
     final db = await database;
+
     await db!.delete(
       'details',
       where: 'id = ?',
       whereArgs: [id],
     );
+    final totalResult = await db.rawQuery(
+      'SELECT SUM(total) FROM details WHERE headerId = ?',
+      [headerId],
+    );
+
+
+    final total = totalResult.first.values.first ?? 0;
+
+
+    await db.rawUpdate('''
+    UPDATE headers
+    SET grandTotal = ?
+    WHERE id = ?
+  ''', [total, headerId]);
+    }
   }
-}
+

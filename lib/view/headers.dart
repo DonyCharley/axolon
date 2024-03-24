@@ -4,7 +4,6 @@ import 'package:axolon_test/view/details.dart';
 import 'package:axolon_test/view/widgets/common_widgets_and_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import '../model/header_model.dart';
 import 'edit_header.dart';
 
@@ -68,8 +67,8 @@ class _HeaderScreen extends State<HeaderScreen> {
       
                                         return  GestureDetector(
                                                 onTap: () {
-                                                  print("headerId${headerController
-                                                      .header[i].id}");
+                                                  // print("headerId${headerController
+                                                  //     .header[i].id}");
                                                   var arguments =
                                                       <String, String>{
                                                     "headerId": headerController
@@ -201,11 +200,9 @@ class _HeaderScreen extends State<HeaderScreen> {
                                                                         bool? confirmed = await showConfirmationDialog();
                                                                         if (confirmed != null && confirmed) {
                                                                           headerController.deleteHeader(int.parse(headerController.header[i].id.toString()));
-                                                                          // User clicked "Yes"
-                                                                          // Do something here
+
                                                                         }
-      
-                                                                   // headerController.deleteHeader(int.parse(headerController.header[i].id.toString()));
+
       
                                                                       },
                                                                 ),
@@ -262,11 +259,6 @@ class _HeaderScreen extends State<HeaderScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-
-  }
 
   Future<List<Header>>? _getHeader;
 

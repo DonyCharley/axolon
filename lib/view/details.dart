@@ -1,5 +1,4 @@
 import 'package:axolon_test/controllers/details_controller.dart';
-import 'package:axolon_test/controllers/header_controller.dart';
 import 'package:axolon_test/view/add_details.dart';
 import 'package:axolon_test/view/edit_details.dart';
 import 'package:axolon_test/view/headers.dart';
@@ -19,6 +18,7 @@ class _DetailsScreen extends State<DetailsScreen> {
   String headerId = Get.arguments['headerId'];
 
   final detailsController = Get.put(DetailController());
+
   @override
   void initState() {
     super.initState();
@@ -28,11 +28,11 @@ class _DetailsScreen extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop){
-       Get.to(const HeaderScreen());
+      onPopInvoked: (didPop) {
+        Get.to(() => const HeaderScreen());
+
       },
       child: Scaffold(
           appBar: AppBar(
@@ -41,19 +41,18 @@ class _DetailsScreen extends State<DetailsScreen> {
             title: const Text("Details"),
             leading: IconButton(
                 onPressed: () {
-                  Get.to(const HeaderScreen());
+
+                  Get.to(() => const HeaderScreen());
+
                 },
                 icon: const Icon(Icons.arrow_back_ios)),
           ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-
-              var arguments =
-              <String, String>{
-                "headerId": headerId
-                    ,
+              var arguments = <String, String>{
+                "headerId": headerId,
               };
-              Get.off(const AddDetails(),arguments: arguments);
+              Get.off(const AddDetails(), arguments: arguments);
             },
             label: const Text("Add"),
             icon: const Icon(Icons.add_circle_outline_rounded),
@@ -64,7 +63,7 @@ class _DetailsScreen extends State<DetailsScreen> {
                   future: _getDetail,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return GetBuilder<HeaderController>(
+                      return GetBuilder<DetailController>(
 
                           // init: HeaderController().fetchDetails(1),
                           builder: (_) => detailsController.details.isNotEmpty
@@ -72,52 +71,50 @@ class _DetailsScreen extends State<DetailsScreen> {
                                   child: ListView.builder(
                                       padding: const EdgeInsets.all(20),
                                       physics: const BouncingScrollPhysics(),
-                                      itemCount: detailsController.details.length,
+                                      itemCount:
+                                          detailsController.details.length,
                                       itemBuilder: (context, i) {
                                         return Card(
                                           color: Colors.white,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                           clipBehavior:
-                                          Clip.antiAliasWithSaveLayer,
+                                              Clip.antiAliasWithSaveLayer,
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Container(
                                                 //width: MediaQuery.of(context).size.width*.75,
                                                 padding:
-                                                const EdgeInsets.all(
-                                                    15),
+                                                    const EdgeInsets.all(15),
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment
-                                                      .start,
+                                                      CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     Row(
                                                       mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         Text(
                                                           detailsController
                                                               .details[i]
-                                                              .productName.toUpperCase(),
-                                                          style:
-                                                          TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors
-                                                                .grey[
-                                                            800],
-                                                              fontWeight: FontWeight.bold
-                                                          ),
+                                                              .productName
+                                                              .toUpperCase(),
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors
+                                                                  .grey[800],
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                       ],
                                                     ),
-                                                    const SizedBox(
-                                                        height: 10),
+                                                    const SizedBox(height: 10),
                                                     const Divider(
                                                       height: 1,
                                                       indent: 0,
@@ -125,38 +122,33 @@ class _DetailsScreen extends State<DetailsScreen> {
                                                       color: Colors.black,
                                                       thickness: 0.5,
                                                     ),
-                                                    const SizedBox(
-                                                        height: 10),
+                                                    const SizedBox(height: 10),
                                                     listItems(
                                                         "Product Code :",
                                                         detailsController
                                                             .details[i]
                                                             .productCode,
                                                         context),
-                                                    const SizedBox(
-                                                        height: 10),
-
+                                                    const SizedBox(height: 10),
                                                     listItems(
                                                         "Rate :",
                                                         detailsController
-                                                            .details[i]
-                                                            .rate.toString(),
+                                                            .details[i].rate
+                                                            .toString(),
                                                         context),
-                                                    const SizedBox(
-                                                        height: 10),
+                                                    const SizedBox(height: 10),
                                                     listItems(
                                                         "Quantity :",
                                                         detailsController
-                                                            .details[i]
-                                                            .quantity.toString(),
+                                                            .details[i].quantity
+                                                            .toString(),
                                                         context),
-                                                    const SizedBox(
-                                                        height: 10),
+                                                    const SizedBox(height: 10),
                                                     listItems(
                                                         "Grand Total :",
                                                         detailsController
-                                                            .details[i]
-                                                            .total.toString(),
+                                                            .details[i].total
+                                                            .toString(),
                                                         context),
                                                     Row(
                                                       children: <Widget>[
@@ -165,48 +157,55 @@ class _DetailsScreen extends State<DetailsScreen> {
                                                           style: TextButton
                                                               .styleFrom(
                                                             foregroundColor:
-                                                            Colors
-                                                                .transparent,
+                                                                Colors
+                                                                    .transparent,
                                                           ),
-                                                          child:
-                                                          const Text(
+                                                          child: const Text(
                                                             "Edit",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .blueAccent),
                                                           ),
                                                           onPressed: () {
-                                                            Get.off(
-                                                                EditDetails(
-                                                                  detail: detailsController.details
-                                                                      [i],
-                                                                ));
+                                                            Get.off(EditDetails(
+                                                              detail:
+                                                                  detailsController
+                                                                      .details[i],
+                                                            ));
                                                           },
                                                         ),
                                                         TextButton(
                                                           style: TextButton
                                                               .styleFrom(
                                                             foregroundColor:
-                                                            Colors
-                                                                .transparent,
+                                                                Colors
+                                                                    .transparent,
                                                           ),
-                                                          child:
-                                                          const Text(
+                                                          child: const Text(
                                                             "Delete",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .blueAccent),
                                                           ),
-                                                          onPressed:
-                                                              () async {
-                                                                bool? confirmed = await showConfirmationDialog();
-                                                                if (confirmed != null && confirmed) {
-                                                                  detailsController.deleteDetail(int.parse(detailsController.details[i].id.toString()),detailsController.details[i].headerId);
-                                                                  // User clicked "Yes"
-                                                                  // Do something here
-                                                                }
-                                                           // headerController.deleteHeader(int.parse(headerController.header[i].id.toString()));
+                                                          onPressed: () async {
+                                                            bool? confirmed =
+                                                                await showConfirmationDialog();
+                                                            if (confirmed !=
+                                                                    null &&
+                                                                confirmed) {
+                                                              detailsController.deleteDetail(
+                                                                  int.parse(detailsController
+                                                                      .details[
+                                                                          i]
+                                                                      .id
+                                                                      .toString()),
+                                                                  detailsController
+                                                                      .details[
+                                                                          i]
+                                                                      .headerId);
 
+
+                                                            }
                                                           },
                                                         ),
                                                       ],
@@ -215,7 +214,7 @@ class _DetailsScreen extends State<DetailsScreen> {
                                                 ),
                                               ),
 
-                                             // const SizedBox(height: 5),
+                                              // const SizedBox(height: 5),
                                             ],
                                           ),
                                         );
@@ -259,8 +258,10 @@ class _DetailsScreen extends State<DetailsScreen> {
                                         //       ]),
                                         // );
                                       }))
-                              : const Center(child: Text("No details to show!")));
-                    } return const Center(child: Text("No details to show!"));
+                              : const Center(
+                                  child: Text("No details to show!")));
+                    }
+                    return const Center(child: Text("No details to show!"));
                   }))),
     );
   }

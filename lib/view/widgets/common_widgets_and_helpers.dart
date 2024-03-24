@@ -99,7 +99,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             fillColor: Colors.white),
 
         validator: (value) {
-          if (value!.isEmpty) {
+          if (value!.isEmpty|| value=="0") {
             return widget.errMsg;
           }
 

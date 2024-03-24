@@ -26,14 +26,14 @@ class HeaderController extends GetxController{
   }
 
   Future<List<Header>> fetchHeaders() async {
-    print("fetched Header data");
+    //print("fetched Header data");
    // headers.value = await dbHelper.getHeaders();
     header=await dbHelper.getHeaders();
     update();
-    for(Header m in header)
-      {
-        print(m.customer);
-      }
+    // for(Header m in header)
+    //   {
+    //     print(m.customer);
+    //   }
     return header;
     //
 

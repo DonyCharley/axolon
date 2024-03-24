@@ -81,14 +81,14 @@ class _AddDetails extends State<AddDetails> {
                       dController.calculateTotal();
                     },
                     type: TextInputType.number,
-                    errMsg: "Product rate required *",
+                    errMsg: "Product qty required *",
                     controller: dController.productQtyController,
                   ),
                   TextFieldWidget(
                     hint: "Total",
                     maxLines: 1,
                     type: TextInputType.number,
-                    errMsg: "Total required *",
+                    errMsg: "rate/qty not entered *",
                     readOnly: true,
                     controller: dController.totalController,
                   ),

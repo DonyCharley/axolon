@@ -47,9 +47,11 @@ class DetailController extends GetxController{
   }
 
   Future<void> deleteDetail(int id, int headerId) async {
-    await dbHelper.deleteDetail(id);
+    await dbHelper.deleteDetail(id,headerId);
     update();
     fetchDetails(headerId);
+
+
   }
 
   void calculateTotal() {
